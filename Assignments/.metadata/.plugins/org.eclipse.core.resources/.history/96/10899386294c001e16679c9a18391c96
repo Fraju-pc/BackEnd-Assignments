@@ -1,0 +1,15 @@
+package Week02;
+
+import java.util.Scanner;
+
+public class VideosFollowAlong {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.print("Hello");
+		System.out.print("World");
+
+	}
+
+}
