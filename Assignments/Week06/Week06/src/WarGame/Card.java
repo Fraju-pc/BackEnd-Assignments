@@ -4,11 +4,11 @@ public class Card {
 
 	//Variables
 	private String name;
-	private String suit;
+	private char suit;
 	private int value;
 	
 	//Constructor
-	Card(String name, String suit, int value){
+	Card(String name, char suit, int value){
 		this.name = name;
 		this.suit = suit;
 		this.value = value;
@@ -23,11 +23,11 @@ public class Card {
 		this.name = name;
 	}
 
-	public String getSuit() {
+	public char getSuit() {
 		return suit;
 	}
 
-	public void setSuit(String suit) {
+	public void setSuit(char suit) {
 		this.suit = suit;
 	}
 

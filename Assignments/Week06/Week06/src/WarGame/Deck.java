@@ -12,10 +12,11 @@ public class Deck {
 	//Constructor
 	Deck(){
 		
-		String[] suits = {"Clubs", "Diamonds", "Hearts", "Spades"};
+		//String[] suits = {"Clubs", "Diamonds", "Hearts", "Spades"};
+		char[] suits = {'\u2663', '\u2666', '\u2764', '\u2660'};
 		String[] numbers = {"Two", "Three", "Four", "Five", "Six", 
 							"Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King", "Ace"};
-		for(String suit : suits) {
+		for(char suit : suits) {
 			int count = 2;
 			for(String number : numbers) {
 				Card card = new Card(number, suit, count);
