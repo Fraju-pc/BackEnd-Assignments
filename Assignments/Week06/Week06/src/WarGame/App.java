@@ -9,7 +9,7 @@ public class App {
         deck.shuffle();
         //Setup the 2 players
         Player player1 = new Player("Greg");
-        Player player2 = new Player("Larry");
+        Player player2 = new Player("Lindsay");
 
         //Deal Cards
         for (int i = 0; i < 52; i++) {
