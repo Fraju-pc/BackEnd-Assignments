@@ -2,19 +2,19 @@ package WarGame;
 
 public class Card {
 
-	//Variables
+	// Variables
 	private String name;
 	private char suit;
 	private int value;
-	
-	//Constructor
-	Card(String name, char suit, int value){
+
+	// Constructor
+	Card(String name, char suit, int value) {
 		this.name = name;
 		this.suit = suit;
 		this.value = value;
 	}
 
-	//Getters and setters
+	// Getters and setters
 	public String getName() {
 		return name;
 	}
@@ -38,8 +38,8 @@ public class Card {
 	public void setValue(int value) {
 		this.value = value;
 	}
-	
-	//Describe Method
+
+	// Describe Method
 	public void describe() {
 		System.out.println(this.name + " of " + this.suit + " - " + this.value);
 	}
