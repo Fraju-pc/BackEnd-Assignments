@@ -1,4 +1,4 @@
-package recipies.exception;
+package recipes.exception;
 
 @SuppressWarnings("serial")
 public class DbException extends RuntimeException {

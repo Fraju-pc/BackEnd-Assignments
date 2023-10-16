@@ -1,9 +1,10 @@
-package recipies.dao;
+package recipes.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import recipies.exception.DbException;
+
+import recipes.exception.DbException;
 
 public class DbConnection {
 
