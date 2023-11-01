@@ -1,12 +1,13 @@
 package projects.dao;
 
-//Imports
+//imports
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import projects.exception.DbException;
 
-public class JDBCconnection {
+//class
+public class DbConnection {
 
 	// Variables
 	private static final String PASSWORD = "projects";
@@ -14,7 +15,7 @@ public class JDBCconnection {
 	private static final int PORT = 3306;
 	private static final String SCHEMA = "projects";
 	private static final String USER = "projects";
-
+	
 	// Connection Method Call
 	public static Connection getConnection() {
 
@@ -34,5 +35,4 @@ public class JDBCconnection {
 		}
 
 	}
-
 }
