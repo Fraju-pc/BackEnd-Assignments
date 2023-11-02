@@ -4,12 +4,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
-
 import recipes.entity.Recipe;
-
-//import java.sql.Connection;
-
-
 import recipes.exception.DbException;
 import recipes.service.RecipeService;
 
@@ -17,11 +12,14 @@ public class Recipes {
 
 	private Scanner scanner = new Scanner(System.in);
 	private RecipeService recipeService = new RecipeService();
+	private Recipe curRecipe;
 
 	// @formatter:off
 	private List<String> operations = List.of(
 			"1. Create and populate all tables",
-			"2. Add a recipe"
+			"2. Add a recipe",
+			"3. List recipes",
+			"4. Select working recipe"
 			);
 	//@formatter:on
 
@@ -49,6 +47,14 @@ public class Recipes {
 			case 2:
 				addRecipe();
 				break;
+			
+			case 3:
+				listRecipe();
+				break;
+				
+			case 4:
+				setCurrentRecipe();
+				break;
 				
 			default:
 				System.out.println("\n" + operation + " is not valid. Try again.");
@@ -61,6 +67,35 @@ public class Recipes {
 		}
 		
 		
+	}
+
+	private void setCurrentRecipe() {
+		List<Recipe> recipes = listRecipe();
+		
+		Integer recipeId = getInput("Select a recipe ID");
+		
+		curRecipe = null;
+		
+		for(Recipe recipe : recipes) {
+			if(recipe.getRecipeId().equals(recipeId)) {
+				curRecipe = recipeService.fetchRecipeById(recipeId);
+				break;
+			}
+		}
+		
+		if(Objects.isNull(curRecipe)) {
+			System.out.println("\nInvalid recipe ID selected");
+		}
+	}
+
+	private List<Recipe> listRecipe() {
+		List<Recipe> recipes = recipeService.fetchRecipe();
+		
+		System.out.println("\nRecipes");
+		
+		recipes.forEach(recipe -> System.out.println(" " + recipe.getRecipeId() + ": " + recipe.getRecipeName()));
+		
+		return recipes;
 	}
 
 	private void addRecipe() {
@@ -83,6 +118,8 @@ public class Recipes {
 		
 		Recipe dbRecipe = recipeService.addRecipe(recipe);
 		System.out.println("You added this recipe:\n" + dbRecipe);
+		
+		curRecipe = recipeService.fetchRecipeById(dbRecipe.getRecipeId());
 	}
 
 	private LocalTime minutesToLocalTime(Integer numMinutes) {
@@ -148,6 +185,11 @@ public class Recipes {
 
 		operations.forEach(op -> System.out.println(op));
 
+		 if (Objects.isNull(curRecipe)) {
+		      System.out.println("\nYou are not working with a recipe.");
+		    } else {
+		      System.out.println("\nYou are working with recipe " + curRecipe);
+		    }
 	}
 
 }
