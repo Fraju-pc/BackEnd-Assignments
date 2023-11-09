@@ -1,10 +1,15 @@
 package recipes;
 
+import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
+import recipes.entity.Category;
+import recipes.entity.Ingredient;
 import recipes.entity.Recipe;
+import recipes.entity.Step;
+import recipes.entity.Unit;
 import recipes.exception.DbException;
 import recipes.service.RecipeService;
 
@@ -19,7 +24,12 @@ public class Recipes {
 			"1. Create and populate all tables",
 			"2. Add a recipe",
 			"3. List recipes",
-			"4. Select working recipe"
+			"4. Select current recipe",
+			"5. Add Ingredient to current recipe",
+			"6. Add step to current recipe",
+			"7. Add cetegory to current recipe",
+			"8. Modify step in current recipe",
+			"9: Delete Recipe"
 			);
 	//@formatter:on
 
@@ -56,6 +66,26 @@ public class Recipes {
 				setCurrentRecipe();
 				break;
 				
+			case 5:
+				addIngredientToCurrentRecipe();
+				break;
+				
+			case 6:
+				addStepToCurrentRecipe();
+				break;
+				
+			case 7:
+				addCategoryToCurrentRecipe();
+				break;
+			
+			case 8:
+				modifyStepInCurrentRecipe();
+				break;
+				
+			case 9:
+				deleteRecipe();
+				break;
+				
 			default:
 				System.out.println("\n" + operation + " is not valid. Try again.");
 				break;
@@ -66,6 +96,123 @@ public class Recipes {
 			System.out.println("\n Error: " +e.toString() + "try again.");
 		}
 		
+		
+	}
+
+	private void deleteRecipe() {
+		listRecipe();
+		Integer recipeId = getInput("Enter the ID of the recipe to delete: ");
+		
+		if(Objects.nonNull(recipeId)) {
+			recipeService.deleteRecipe(recipeId);
+			
+			System.out.println("Recipe Successfully Deleted!");
+			
+			if(Objects.nonNull(curRecipe) && curRecipe.getRecipeId().equals(recipeId)) {
+				curRecipe = null;
+			}
+		}
+	}
+
+	private void modifyStepInCurrentRecipe() {
+		if (Objects.isNull(curRecipe)) {
+			System.out.println("\nPlease select a recipe first");
+			return;
+		}
+		
+		List<Step> steps = recipeService.fetchSteps(curRecipe.getRecipeId());
+		
+		System.out.println("\nSteps for current recipe");
+		steps.forEach(step -> System.out.println("  " + step));
+		
+		Integer stepId = getInput("Enter ID of step to modify: ");
+		
+		if(Objects.nonNull(stepId)) {
+			String stepText = getStringInput("Enter new step text: ");
+			if(Objects.nonNull(stepText)) {
+				Step step = new Step();
+				
+				step.setStepId(stepId);
+				step.setStepText(stepText);
+				
+				recipeService.modifyStep(step);
+				
+				curRecipe = recipeService.fetchRecipeById(curRecipe.getRecipeId());
+			}
+		}
+		
+	}
+
+	private void addCategoryToCurrentRecipe() {
+		if (Objects.isNull(curRecipe)) {
+			System.out.println("\nPlease select a recipe first");
+			return;
+		}
+		
+		List<Category> categories = recipeService.fetchCategories();
+		categories.forEach(category -> System.out.println("  " + category.getCategoryName()));
+		
+		String category = getStringInput("Enter the category to add: ");
+		
+		if(Objects.nonNull(category)) {
+			recipeService.addCategoryToRecipe(curRecipe.getRecipeId(), category);
+			
+			curRecipe = recipeService.fetchRecipeById(curRecipe.getRecipeId());
+		}
+		
+		
+	}
+
+	private void addStepToCurrentRecipe() {
+		if (Objects.isNull(curRecipe)) {
+			System.out.println("\nPlease select a recipe first");
+			return;
+		}
+		
+		String stepText = getStringInput("Enter the step text: ");
+		
+		if(Objects.nonNull(stepText)) {
+			Step step = new Step();
+			
+			step.setRecipeId(curRecipe.getRecipeId());
+			step.setStepText(stepText);
+			
+			recipeService.addStep(step);
+			curRecipe = recipeService.fetchRecipeById(step.getRecipeId());
+		}
+		
+	}
+
+	private void addIngredientToCurrentRecipe() {
+		if (Objects.isNull(curRecipe)) {
+			System.out.println("\nPlease select a recipe first");
+			return;
+		}
+		
+		String name = getStringInput("Enter the ingredient name");
+		String instruction = getStringInput("Enter and instruction if any");
+		Double inputAmount = getDoubleInput("Enter the ingredient amount");
+		List<Unit> units = recipeService.fetchUnits();
+		
+		BigDecimal amount = Objects.isNull(inputAmount) ? null : new BigDecimal(inputAmount).setScale(2);
+		System.out.println("Units: ");
+		units.forEach(unit -> System.out.println("  " + unit.getUnitId() + ": " + unit.getUnitNameSingular() + "(" + unit.getUnitNamePlural() + ")"));
+	
+		Integer unitId = getInput("Enter a unit ID (press enter for none):");
+		
+		Unit unit = new Unit();
+		
+		unit.setUnitId(unitId);
+		
+		Ingredient ingredient = new Ingredient();
+		ingredient.setRecipeId(curRecipe.getRecipeId());
+		ingredient.setUnit(unit);
+		ingredient.setIngredientName(name);
+		ingredient.setInstruction(instruction);
+		ingredient.setAmount(amount);
+		
+		recipeService.addIngredient(ingredient);
+		curRecipe = recipeService.fetchRecipeById(ingredient.getRecipeId());
 		
 	}
 
