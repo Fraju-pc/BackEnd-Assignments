@@ -148,7 +148,7 @@ public abstract class DaoBase {
    * @return The count of the entities attached to the parent plus one
    * @throws SQLException Thrown if an error occurs.
    */
-  protected Integer getNextSequenceNumber(Connection conn, Integer id, String tableName,
+  protected static Integer getNextSequenceNumber(Connection conn, Integer id, String tableName,
       String idName) throws SQLException {
     String sql = "SELECT COUNT(*) FROM " + tableName + " WHERE " + idName + " = ?";
 
