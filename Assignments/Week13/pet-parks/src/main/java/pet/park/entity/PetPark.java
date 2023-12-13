@@ -27,7 +27,7 @@ public class PetPark {
 	
 	private String parkName;
 	
-	private String Directions;
+	private String directions;
 	
 	private String stateOrProvince;
 	

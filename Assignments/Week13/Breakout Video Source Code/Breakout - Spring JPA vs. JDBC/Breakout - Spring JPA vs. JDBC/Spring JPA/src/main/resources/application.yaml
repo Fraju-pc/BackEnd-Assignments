@@ -1,0 +1,22 @@
+# spring.datasource defines the information needed to connect to the MySQL
+# schema.
+spring:
+  datasource:
+    username: bunnies-jpa
+    password: bunnies-jpa
+    url: jdbc:mysql://localhost:3306/bunnies-jpa
+
+  # This section tells JPA to create the data tables. Once the tables have been
+  # created, set spring.jpa.hibernate.ddl-auto to "update".    
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    defer-datasource-initialization: true 
+
+  # This instructs Spring JPA to load data.sql from the classpath 
+  # (src/main/resources) and to perform a batch execution of any SQL statements
+  # within. To turn this feature off, seet spring.sql.init.mode to "never".
+  sql:
+    init:
+      mode: always 
