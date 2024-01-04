@@ -18,7 +18,6 @@ public class Breed {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	private Long breedId;
 	
 	private String name;

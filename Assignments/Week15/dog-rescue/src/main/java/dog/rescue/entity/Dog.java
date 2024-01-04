@@ -22,7 +22,6 @@ public class Dog {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	private Long dogId;
 
 	@EqualsAndHashCode.Exclude
@@ -34,8 +33,9 @@ public class Dog {
 	@EqualsAndHashCode.Exclude
 	private String color;
 
-	@ManyToOne
+	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
+	@ManyToOne
 	@JoinColumn(name = "location_id", nullable = false)
 	private Location location;
 

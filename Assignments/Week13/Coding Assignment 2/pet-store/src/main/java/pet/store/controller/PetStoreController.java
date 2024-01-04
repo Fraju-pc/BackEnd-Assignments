@@ -89,6 +89,6 @@ public class PetStoreController {
 		
 		petStoreService.deletePetStoreById(petStoreId);
 		
-		return Map.of("message", "Deletion of contributor with ID= " + petStoreId + " was successful.");
+		return Map.of("message", "Deletion of Pet Store with ID= " + petStoreId + " was successful.");
 	}
 }

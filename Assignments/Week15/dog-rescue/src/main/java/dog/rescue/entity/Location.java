@@ -17,8 +17,8 @@ public class Location {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	private Long locationId;
+	
 	private String businessName;
 	private String streetAddress;
 	private String city;
