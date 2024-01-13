@@ -8,7 +8,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -17,23 +19,22 @@ import lombok.ToString;
 @Entity
 public class Store {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long storeId;
-    
+
 	private String storeName;
 	private String streetAddress;
 	private String city;
 	private String state;
 	private String zip;
 	private String phone;
-	
+
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
-	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<StoreInventory> inventoryList = new HashSet<>();
-	
-	
-	
-	
+	@JoinTable(name = "store_instruments", joinColumns = @JoinColumn(name = "store_id"), inverseJoinColumns = @JoinColumn(name = "instrument_id"))
+	private Set<Instrument> instruments = new HashSet<>();
+
+
 }

@@ -42,6 +42,8 @@ public class Dog {
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	@ManyToMany(cascade = CascadeType.PERSIST)
-	@JoinTable(name = "dog_breed", joinColumns = @JoinColumn(name = "dog_id"), inverseJoinColumns = @JoinColumn(name = "breed_id"))
+	@JoinTable(name = "dog_breed", 
+	joinColumns = @JoinColumn(name = "dog_id"), 
+	inverseJoinColumns = @JoinColumn(name = "breed_id"))
 	private Set<Breed> breeds = new HashSet<>();
 }

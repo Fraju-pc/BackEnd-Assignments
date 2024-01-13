@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import music.store.entity.Category;
 import music.store.entity.Instrument;
-import music.store.entity.StoreInventory;
+import music.store.entity.Store;
 
 @Data
 @NoArgsConstructor
@@ -19,40 +19,38 @@ public class InstrumentData {
 	private String description;
 	private Long price;
 	private String image;
-	private Category category;
-	private Set<StoreInventoryData> inventoryList = new HashSet<>();
+	private CategoryData category;
+
 	
+
 	public InstrumentData(Instrument instrument) {
-		
+
 		this.instrumentId = instrument.getInstrumentId();
 		this.name = instrument.getName();
 		this.color = instrument.getColor();
 		this.description = instrument.getDescription();
 		this.price = instrument.getPrice();
 		this.image = instrument.getImage();
-		this.category = instrument.getCategory();
+		this.category = new CategoryData(instrument.getCategory());
 		
-		for(StoreInventory inventory : instrument.getInventoryList()) {
-    		this.inventoryList.add(new StoreInventoryData(inventory));
-    	}
+
+
 	}
-	
+
 	public Instrument toInstrument() {
 		Instrument instrument = new Instrument();
-		
+
 		instrument.setInstrumentId(instrumentId);
 		instrument.setName(name);
 		instrument.setColor(color);
 		instrument.setDescription(description);
 		instrument.setPrice(price);
 		instrument.setImage(image);
-		instrument.setCategory(category);
+		instrument.setCategory(category.toCategory());
 		
-		for(StoreInventoryData inventoryData: inventoryList) {
-			instrument.getInventoryList().add(inventoryData.toStoreInventory());
-    	}
-		
+
+
 		return instrument;
 	}
-	
+
 }

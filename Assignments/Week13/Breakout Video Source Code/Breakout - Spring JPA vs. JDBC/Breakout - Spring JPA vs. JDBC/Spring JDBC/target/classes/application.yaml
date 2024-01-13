@@ -1,0 +1,13 @@
+# spring.datasource defines the information needed to connect to the MySQL
+# schema.
+spring:
+  datasource:
+    username: bunnies-jdbc
+    password: bunnies-jdbc
+    url: jdbc:mysql://localhost:3306/bunnies-jdbc
+  
+  # This section tells Spring JDBC to look for schema.sql and data.sql on the
+  # classpath and to execute the SQL statements in them.
+  sql:
+    init:
+      mode: always # Set to "never" to not recreate the schema tables.

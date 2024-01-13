@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS StoreInventory;
+DROP TABLE IF EXISTS Store_Instruments;
 DROP TABLE IF EXISTS Instrument;
 DROP TABLE IF EXISTS Category;
 DROP TABLE IF EXISTS Store;
@@ -22,21 +22,19 @@ CREATE TABLE Category (
 
 CREATE TABLE Instrument (
     instrument_id INT AUTO_INCREMENT,
-    instrument_name VARCHAR(80) NOT NULL,
-    instrument_color VARCHAR(80),
-    instrument_description VARCHAR(255),
-    instrument_price INT,
-    instrument_image VARCHAR(128),
+    name VARCHAR(80) NOT NULL,
+    color VARCHAR(80),
+    description VARCHAR(255),
+    price INT,
+    image VARCHAR(128),
     category_id INT,
     FOREIGN KEY (category_id) REFERENCES Category(category_id) ON DELETE CASCADE,
     PRIMARY KEY(instrument_id)
 );
 
-CREATE TABLE StoreInventory (
+CREATE TABLE Store_Instruments (
     store_id INT,
     instrument_id INT,
-    inventory_amount INT,
-    PRIMARY KEY (store_id, instrument_id),
-    FOREIGN KEY (store_id) REFERENCES Store(store_id) ON DELETE CASCADE,
-    FOREIGN KEY (instrument_id) REFERENCES Instrument(instrument_id) ON DELETE CASCADE
+    FOREIGN KEY (store_id) REFERENCES Store(store_id),
+    FOREIGN KEY (instrument_id) REFERENCES Instrument(instrument_id)
 );

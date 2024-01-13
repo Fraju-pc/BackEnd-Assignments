@@ -5,8 +5,8 @@ import java.util.Set;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import music.store.entity.Instrument;
 import music.store.entity.Store;
-import music.store.entity.StoreInventory;
 
 @Data
 @NoArgsConstructor
@@ -20,7 +20,7 @@ public class StoreData {
 	private String state;
 	private String zip;
 	private String phone;
-    private Set<StoreInventoryData> inventoryList = new HashSet<>();
+	private Set<InstrumentData> instruments = new HashSet<>();
 	
     public StoreData(Store store) {
     	this.storeId = store.getStoreId();
@@ -31,10 +31,11 @@ public class StoreData {
     	this.zip = store.getZip();
     	this.phone = store.getPhone();
     	
-    	for(StoreInventory inventory : store.getInventoryList()) {
-    		this.inventoryList.add(new StoreInventoryData(inventory));
+    	for(Instrument instrument : store.getInstruments()) {
+    		this.instruments.add(new InstrumentData(instrument));
     	}
-    }
+    	
+ }
     
     public Store toStore() {
     	Store store = new Store();
@@ -46,10 +47,11 @@ public class StoreData {
     	store.setZip(zip);
     	store.setPhone(phone);
     	
-    	for(StoreInventoryData inventoryData: inventoryList) {
-    		store.getInventoryList().add(inventoryData.toStoreInventory());
+    	for(InstrumentData instrument : instruments) {
+    		store.getInstruments().add(instrument.toInstrument());
     	}
     	
+  	
     	return store;
     }
    
