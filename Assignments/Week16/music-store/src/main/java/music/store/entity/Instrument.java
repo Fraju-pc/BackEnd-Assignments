@@ -3,6 +3,7 @@ package music.store.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +14,6 @@ import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import music.store.controller.model.CategoryData;
 
 @Data
 @Entity
@@ -37,7 +37,7 @@ public class Instrument {
 
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
-	@ManyToMany(mappedBy = "instruments")
+	@ManyToMany(mappedBy = "instruments", cascade = CascadeType.PERSIST)
 	private Set<Store> stores = new HashSet<>();
 
 		

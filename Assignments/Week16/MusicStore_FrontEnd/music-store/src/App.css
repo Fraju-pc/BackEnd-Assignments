@@ -1,42 +1,87 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+html {
+  padding: 1em;
+  margin: auto;
 }
+
+a {
+  font-weight: 500;
+  color: #965ae5;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #9c1593;
+}
+
+body {
+  align-items: center;
+  justify-content: center;
+  background-color: #47c7a7;
+  padding:1em;
+  margin: auto;
+
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+nav{
+ 
+  background-color: #941100;
+  margin: auto;
+  padding: 0;
+  color: white;
+  font-size: 24px;
+  padding: 1px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 2px #905755;
+}
+
+nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  align-items: top;
+}
+
+nav ul li {
+  list-style-type: none;
+  margin-right: 1em;
+}
+
+
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+table{
+  border-radius: 10px;
+  /* box-shadow: 5px 5px 2px #d4ae5e; */
+  overflow: hidden;
+
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+td{
+  background-color: #d18177;
+  margin: auto;
+  color: white;
+  font-size: 24px;
+  padding: 4px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 2px #905755;
 }
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+th{
+  background-color: #e21f05;
+  margin: auto;
+  color: white;
+  font-size: 24px;
+  padding: 4px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 2px #905755; 
 }

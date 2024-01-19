@@ -1,13 +1,8 @@
 package music.store.controller.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import music.store.entity.Category;
 import music.store.entity.Instrument;
-import music.store.entity.Store;
 
 @Data
 @NoArgsConstructor

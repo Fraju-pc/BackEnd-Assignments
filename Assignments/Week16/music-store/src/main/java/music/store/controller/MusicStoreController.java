@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,11 +17,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
+import music.store.controller.model.CategoryData;
 import music.store.controller.model.InstrumentData;
 import music.store.controller.model.StoreData;
 import music.store.service.MusicStoreService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/music_store")
 @Slf4j
 public class MusicStoreController {
@@ -89,5 +92,27 @@ public class MusicStoreController {
 		log.info("Retrieving all Instruments");
 		
 		return musicStoreService.retrieveAllInstruments();
+	}
+	
+	@DeleteMapping("/instrument")
+	public void deleteAllInstruments() {
+		log.info("Attempting to delete all Instruments.");
+		throw new UnsupportedOperationException("Deleting all Instruments is not allowed.");
+	}
+	
+	@DeleteMapping("store/{storeId}/instrument/{instrumentId}")
+	public Map<String, String> deleteInstrument(@PathVariable Long storeId, @PathVariable Long instrumentId ){
+		log.info("Deleting Instrument with Id={} from Store with Id={}", instrumentId, storeId);
+		
+		musicStoreService.deleteInstrumentById(instrumentId, storeId);
+		
+		return Map.of("message", "Deletion of Pet Store with ID= " + instrumentId + " was successful.");
+	}
+	
+	@GetMapping("/category")
+	public List<CategoryData> retrieveAllCategories(){
+		log.info("Retrieving all Stores");
+		
+		return musicStoreService.retrieveAllCategories();
 	}
 }

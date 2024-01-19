@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import music.store.controller.model.CategoryData;
 import music.store.controller.model.InstrumentData;
 import music.store.controller.model.StoreData;
 import music.store.dao.CategoryDao;
@@ -101,6 +102,7 @@ public class MusicStoreService {
 			instrument = new Instrument();
 		} else {
 			instrument = findInstrumentById(instrumentData, storeId, instrumentId);
+			
 		}
 		return instrument;
 	}
@@ -120,6 +122,21 @@ public class MusicStoreService {
 			return instrument;
 	}
 
+	private Instrument findInstrumentById(Long storeId, Long instrumentId) {
+		Instrument instrument = instrumentDao.findById(instrumentId).orElseThrow(() -> new NoSuchElementException("Instrument with Id= " 
+				+ instrumentId + " does not exist."));
+		Set<Store> store = instrument.getStores();
+		
+		for(Store stores : store) {
+			if(stores.getStoreId() != storeId) {
+				throw new IllegalArgumentException("Instrument does not belong to any specified Store");
+			}
+			
+		}
+		
+			return instrument;
+	}
+	
 	@Transactional(readOnly = true)
 	public InstrumentData retrieveInstrumentById(Long instrumentId) {
 		Instrument instrument = findInstrumentById(instrumentId);
@@ -130,13 +147,27 @@ public class MusicStoreService {
 	
 	private Instrument findInstrumentById(Long instrumentId) {
 		return instrumentDao.findById(instrumentId)
-				.orElseThrow(() -> new NoSuchElementException("Store with ID= " + instrumentId + " was not found."));
+				.orElseThrow(() -> new NoSuchElementException("Instrument with ID= " + instrumentId + " was not found."));
 
 	}
+	
 	@Transactional(readOnly = true)
 	public List<InstrumentData> retrieveAllInstruments() {
 
 		return instrumentDao.findAll().stream().map(InstrumentData::new).toList();
+	}
+
+	@Transactional(readOnly = false)
+	public void deleteInstrumentById(Long instrumentId, Long storeId) {
+		Instrument instrument = findInstrumentById(instrumentId, storeId);
+		instrumentDao.delete(instrument);
+		
+	}
+
+	@Transactional(readOnly = true)
+	public List<CategoryData> retrieveAllCategories() {
+		
+		return categoryDao.findAll().stream().map(CategoryData::new).toList();
 	}
 
 }
